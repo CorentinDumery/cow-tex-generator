@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
                 float w = ImGui::GetContentRegionAvailWidth();
                 float p = ImGui::GetStyle().FramePadding.x;
 
-                if (ImGui::Button("Inverse", ImVec2(-1,0))){
+                if (ImGui::Button("Black <-> White", ImVec2(-1,0))){
                     R = 255 - R.array();
                     G = 255 - G.array();
                     B = 255 - B.array();
@@ -101,8 +101,8 @@ int main(int argc, char *argv[])
             }
 
             if (ImGui::CollapsingHeader("Rendering", ImGuiTreeNodeFlags_DefaultOpen)){
-                ImGui::SliderFloat("Shininess", &viewer.data(cow_id).shininess, 0.1f, 10.0f, "%.3f"));
-                ImGui::SliderFloat("Specularity", &viewer.core().lighting_factor, 0.0f, 5.0f, "%.3f"));
+                ImGui::SliderFloat("Shininess", &viewer.data(cow_id).shininess, 0.1f, 5.0f, "%.3f");
+                ImGui::SliderFloat("Specularity", &viewer.core().lighting_factor, 0.0f, 5.0f, "%.3f");
             }
 
             ImGui::End();
@@ -136,6 +136,7 @@ int main(int argc, char *argv[])
     viewer.data(cow_id).show_texture = true;
     viewer.data(cow_id).show_lines = 0u;
     viewer.data(cow_id).set_face_based(0u);
+    viewer.data(cow_id).shininess = 2;
 
     Eigen::MatrixXd ground_V(4,3);
     Eigen::MatrixXd ground_UV(4,2);
@@ -185,5 +186,5 @@ int main(int argc, char *argv[])
     viewer.core().trackball_angle = rot;
 
 
-    viewer.launch();
+    viewer.launch(true, false, "Cow Tex Viz");
 }
